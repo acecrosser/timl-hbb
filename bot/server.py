@@ -9,7 +9,19 @@ bd = Dispatcher(bot)
 
 @bd.message_handler(commands=['start'])
 async def send_welcome(msg: types.Message):
-    await msg.answer('Тебя приветсвует timl-bot!')
+    await msg.answer('Тебя приветсвует Timl-bot!')
+
+
+@bd.message_handler(lambda msg: msg.text.startswith('Доход'))
+async def add_profit(msg: types.Message):
+    try:
+        data = receiver.add_profit(msg.text)
+    except receiver.NotCorrectMessage as e:
+        await msg.answer(str(e))
+        return
+    answer_profit = (
+        f'Додход от {data.name} в сумме {data.amount} добавлен в базу')
+    await msg.answer(answer_profit)
 
 
 @bd.message_handler()
@@ -22,18 +34,6 @@ async def add_data(msg: types.Message):
     answer_msg = (
         f'Добавили в общую базу {data.amount} р., - {data.name}')
     await msg.answer(answer_msg)
-
-
-@bd.message_handler(lambda msg: msg.text.startwish('Доход'))
-async def add_profit(msg: types.Message):
-    try:
-        data = receiver.add_profit(msg.text)
-    except receiver.NotCorrectMessage as e:
-        await msg.answer(str(e))
-        return
-    answer_profit = (
-        f'Додход от {data.name} в сумме {data.amount} добавлен в базу')
-    await msg.answer(answer_profit)
 
 
 if __name__ == '__main__':

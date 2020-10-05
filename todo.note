@@ -3,5 +3,16 @@
 + научить принимать данные и записывать в БД
 
 - продумать формат данных
-- сформировать нужные таблицы в бд
++ сформировать нужные таблицы в бд
 - добавить еще несколько форматов добавления данных
+
+- создать единую функцию добавки данных в БД
+
+CREATE TABLE MONEY_MOVEMENT (
+    date     DATE,
+    amount   INT,
+    type     STRING,
+    category STRING,
+    name     STRING,
+    author   STRING UNIQUE ON CONFLICT ABORT
+);

@@ -30,7 +30,7 @@ def add_data(raw_message: str) -> AddData:
 
 
 def add_profit(raw_message: str) -> AddData:
-    parsed_msg = _parse_message(raw_message)
+    parsed_msg = _parse_me(raw_message)
     add_to_db = dbase.insert_data('PROFIT', {
         'created': _get_now_datetime(),
         'amount': parsed_msg.amount,
@@ -49,6 +49,15 @@ def _parse_message(raw_message: str) -> Message:
     text = reg_result.group(2).strip().lower()
     # print(amount, text)
     return Message(amount=amount, text=text)
+
+
+def _parse_me(raw_msg: str) -> Message:
+    reg_result = re.match(r'(Доход) ([\d ]+) (.*)', raw_msg)
+    if not reg_result or not reg_result.group(0) or not reg_result.group(2) or not reg_result.group(3):
+        raise NotCorrectMessage('Не могу понять сообщения, пишит так: Доход-Расход Сумма Имя')
+    amount = reg_result.group(2).replace(' ', '')
+    name = reg_result.group(3).strip()
+    return Message(amount=amount, text=name)
 
 
 def _get_now_datetime() -> str:
