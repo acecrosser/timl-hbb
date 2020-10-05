@@ -13,6 +13,5 @@ def insert_data(table: str, column_values: Dict):
     cursor.executemany(
         f'INSERT INTO {table} '
         f'({columns}) '
-        f'VALUES ({how_many})',
-        values)
+        f'VALUES ({how_many})', values)
     connect.commit()
