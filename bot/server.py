@@ -20,8 +20,20 @@ async def add_data(msg: types.Message):
         await msg.answer(str(e))
         return
     answer_msg = (
-        f'Добавили в базу {data.amount} р., - {data.name}')
+        f'Добавили в общую базу {data.amount} р., - {data.name}')
     await msg.answer(answer_msg)
+
+
+@bd.message_handler(lambda msg: msg.text.startwish('Доход'))
+async def add_profit(msg: types.Message):
+    try:
+        data = receiver.add_profit(msg.text)
+    except receiver.NotCorrectMessage as e:
+        await msg.answer(str(e))
+        return
+    answer_profit = (
+        f'Додход от {data.name} в сумме {data.amount} добавлен в базу')
+    await msg.answer(answer_profit)
 
 
 if __name__ == '__main__':

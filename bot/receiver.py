@@ -29,6 +29,16 @@ def add_data(raw_message: str) -> AddData:
     return AddData(id=None, amount=parsed_msg.amount, name=parsed_msg.text)
 
 
+def add_profit(raw_message: str) -> AddData:
+    parsed_msg = _parse_message(raw_message)
+    add_to_db = dbase.insert_data('PROFIT', {
+        'created': _get_now_datetime(),
+        'amount': parsed_msg.amount,
+        'name': parsed_msg.text,
+    })
+    return AddData(id=None, amount=parsed_msg.amount, name=parsed_msg.text)
+
+
 def _parse_message(raw_message: str) -> Message:
     reg_result = re.match(r'([\d ]+) (.*)', raw_message)
     if not reg_result or not reg_result.group(0) \
