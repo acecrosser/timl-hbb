@@ -24,7 +24,7 @@ async def add_data(msg: types.Message):
     await msg.answer(answer_msg)
 
 
-@bd.message_handler(commands=['profit'])
+@bd.message_handler(lambda msg: msg.text.startwish('Доход'))
 async def add_profit(msg: types.Message):
     try:
         data = receiver.add_profit(msg.text)
