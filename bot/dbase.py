@@ -15,3 +15,8 @@ def insert_data(table: str, column_values: Dict):
         f'({columns}) '
         f'VALUES ({how_many})', values)
     connect.commit()
+
+
+def give_cursor():
+    return cursor
+
