@@ -1,4 +1,5 @@
 from aiogram import Bot, Dispatcher, types, executor
+from aiogram.contrib.fsm_storage.memory import MemoryStorage
 import receiver
 import exceptions
 import interface
@@ -7,10 +8,11 @@ import interface
 API_TOKEN = '1104987716:AAGF8AfDDSoBBXuzoPbUvHIJNM7M0DK6H9Q'
 
 bot = Bot(token=API_TOKEN)
-bd = Dispatcher(bot)
+storage = MemoryStorage()
+db = Dispatcher(bot, storage=storage)
 
 
-@bd.message_handler(commands=['start'])
+@db.message_handler(commands=['start'])
 async def send_welcome(msg: types.Message):
     await msg.answer('Тебя приветсвует Timl-bot! \n'
                      'Формат внесения в базу: \n'
@@ -19,7 +21,7 @@ async def send_welcome(msg: types.Message):
                      '15000 доход аванс работа')
 
 
-@bd.message_handler()
+@db.message_handler()
 async def add_data(msg: types.Message):
     try:
         data = receiver.general_data(msg.text)
@@ -36,4 +38,4 @@ async def add_data(msg: types.Message):
 
 
 if __name__ == '__main__':
-    executor.start_polling(bd, skip_updates=True)
+    executor.start_polling(db, skip_updates=True)
