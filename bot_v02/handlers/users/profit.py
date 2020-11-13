@@ -1,5 +1,6 @@
 from aiogram import types
 from keyboards.inline import profit_buttons
+from data.dbase.models import insert_data
 
 from loader import dp
 
