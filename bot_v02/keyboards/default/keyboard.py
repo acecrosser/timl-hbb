@@ -9,6 +9,7 @@ default_buttons = ReplyKeyboardMarkup(
             KeyboardButton('Расход')
         ],
         [
+            KeyboardButton('Отчеты'),
             KeyboardButton('Настройки')
         ]
     ]
