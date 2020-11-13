@@ -2,22 +2,30 @@ from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from aiogram.utils.callback_data import CallbackData
 
 
-profit_button = InlineKeyboardButton('Ежедневный', callback_data='everyday_profit')
-profit_buttons = InlineKeyboardMarkup().add(profit_button)
-
-
 call_back_expense = CallbackData('exp', 'group')
+call_back_profit = CallbackData('prf', 'group')
 
 expense_buttons = InlineKeyboardMarkup(
     inline_keyboard=[
         [
-            InlineKeyboardButton('Ежедневный', callback_data=call_back_expense.new(group='day')),
+            InlineKeyboardButton('Ежедневные', callback_data=call_back_expense.new(group='ежедневные')),
         ],
         [
-            InlineKeyboardButton('Недельный', callback_data=call_back_expense.new(group='week')),
+            InlineKeyboardButton('Недельные', callback_data=call_back_expense.new(group='недельные')),
         ],
         [
-            InlineKeyboardButton('Ежемесячный', callback_data=call_back_expense.new(group='month'))
+            InlineKeyboardButton('Ежемесячные', callback_data=call_back_expense.new(group='ежемесячные'))
         ]
+    ]
+)
+
+profit_buttons = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [
+            InlineKeyboardButton('Постоянный', callback_data=call_back_profit.new(group='постоянный'))
+        ],
+        [
+            InlineKeyboardButton('Дополнительный', callback_data=call_back_profit.new(group='дополнительный'))
+        ],
     ]
 )

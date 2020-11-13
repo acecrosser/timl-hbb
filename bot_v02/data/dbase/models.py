@@ -1,6 +1,8 @@
+import logging
 import sqlite3
 from typing import Dict
 
+sqlite3.OperationalError()
 
 connect = sqlite3.connect('base.db')
 cursor = connect.cursor()
@@ -24,8 +26,9 @@ def insert_data(table: str, column_items: Dict):
         f'({columns})'
         f'VALUES ({number})', values)
     connect.commit()
+    # connect.close()
+    logging.info('Данные успешно внесены...')
 
 
-def give_cursor():
-    return cursor
-
+if __name__ == '__main__':
+    make_default_db()
