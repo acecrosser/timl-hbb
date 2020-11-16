@@ -21,7 +21,7 @@ async def profit_answer(msg: types.Message):
 @dp.callback_query_handler(call_back_profit.filter(), state=None)
 async def chose_group(call: CallbackQuery, callback_data: dict, state: FSMContext):
     await call.answer()
-    logging.info(callback_data)
+    # logging.info(callback_data)
     await call.message.answer('Введите сумму дохода:')
     data_group = callback_data.get('group')
     await state.update_data(group=data_group)
@@ -43,6 +43,7 @@ async def make_expense(msg: types.Message, state: FSMContext):
     summa = data.get('summa')
     name = msg.text
     value_group = {
+        'id_user': msg.from_user.id,
         'amount': summa,
         'grouping': group,
         'title': name,
