@@ -1,12 +1,10 @@
 import logging
-import sqlite3
 import psycopg2 as sql
 from typing import Dict
 from datetime import datetime
 
-sqlite3.OperationalError()
+sql.OperationalError()
 
-# connect = sqlite3.connect('base.db')
 connect = sql.connect(dbname='db_finbot',
                       user='bot_admin',
                       password='PmeT3mn7tPynhVqY254M',
@@ -32,13 +30,10 @@ def insert_data(table: str, column_items: Dict):
         f'INSERT INTO {table} '
         f'({columns})'
         f'VALUES ({number})', values)
-    # connect.commit()
-    # connect.close()
     logging.info('Данные успешно внесены...')
 
 
 def today(table: str, id_user: str):
-    # id_user = column_items['id_user']
     today = datetime.now().strftime('%Y-%m-%d')
     cursor.execute(
         f"SELECT sum(amount) FROM {table} WHERE id_user='{id_user}' AND time LIKE'{today}%'"

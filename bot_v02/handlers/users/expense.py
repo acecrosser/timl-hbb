@@ -7,7 +7,7 @@ from keyboards.inline import expense_buttons, call_back_expense
 from data.dbase.models import insert_data
 from utils.states import StatesExpense
 from data.dbase.models import make_default_db
-from sqlite3 import OperationalError
+from psycopg2 import OperationalError
 from keyboards.default import default_buttons
 
 
