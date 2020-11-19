@@ -33,10 +33,9 @@ def insert_data(table: str, column_items: Dict):
     logging.info('Данные успешно внесены...')
 
 
-def today(table: str, id_user: str):
-    today = datetime.now().strftime('%Y-%m-%d')
+def today(table: str, id_user: str, period: str):
     cursor.execute(
-        f"SELECT sum(amount) FROM {table} WHERE id_user='{id_user}' AND time LIKE'{today}%'"
+        f"SELECT sum(amount) FROM {table} WHERE id_user='{id_user}' AND time LIKE'{period}%'"
     )
     summa_today = cursor.fetchone()
     return summa_today

@@ -19,7 +19,7 @@ async def expense_answer(msg: types.Message):
     await msg.answer('Выберите категорию расхода:', reply_markup=expense_buttons)
 
 
-@dp.callback_query_handler(call_back_expense.filter(), state=None)
+@dp.callback_query_handler(call_back_expense.filter(group=['ежедневные', 'недельные', 'ежемесячные']), state=None)
 async def chose_group(call: CallbackQuery, callback_data: dict, state: FSMContext):
     await call.answer()
     await call.message.answer('Введите сумму расхода:')

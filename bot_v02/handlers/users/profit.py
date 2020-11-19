@@ -18,7 +18,7 @@ async def profit_answer(msg: types.Message):
     await msg.answer('Выберите категорию дохода:', reply_markup=profit_buttons)
 
 
-@dp.callback_query_handler(call_back_profit.filter(), state=None)
+@dp.callback_query_handler(call_back_profit.filter(group=['постоянный', 'дополнительный']), state=None)
 async def chose_group(call: CallbackQuery, callback_data: dict, state: FSMContext):
     await call.answer()
     # logging.info(callback_data)
