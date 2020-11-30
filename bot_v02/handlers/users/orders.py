@@ -27,11 +27,13 @@ async def make_order_expense(call: CallbackQuery, callback_data: dict):
     await call.message.answer(f'Ваши расходы за {data_group}: {data[0]} руб.')
 
 
-@dp.message_handler(Command('dist'))
+@dp.message_handler(Command('order_full'))
 async def make_order(msg: types.Message):
-    work_data = distinct("expense", "5093906", "2020-11")
+    id_user = msg.from_user.id
+    month = datetime.now().strftime('%Y-%m')
+    work_data = distinct("expense", id_user=id_user, period=month)
     end_list = ''
     for i in work_data:
-        sum = sum_title('expense', '5093906', '2020-11', i[0])
+        sum = sum_title('expense', id_user=id_user, period=month, title=i[0])
         end_list += f'{i[0]} --- {sum[0]} руб.\n'
-    await msg.answer(f'Отчет по расходам за выбранный период: \n\n {end_list}')
+    await msg.answer(f'Отчет по расходам за текущий месяц: \n\n {end_list}')

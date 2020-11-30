@@ -1,7 +1,6 @@
 import logging
 import psycopg2 as sql
 from typing import Dict
-from datetime import datetime
 
 sql.OperationalError()
 
