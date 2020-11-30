@@ -12,10 +12,13 @@ expense_buttons = InlineKeyboardMarkup(
             InlineKeyboardButton('Ежедневные', callback_data=call_back_expense.new(group='ежедневные')),
         ],
         [
-            InlineKeyboardButton('Недельные', callback_data=call_back_expense.new(group='недельные')),
+            InlineKeyboardButton('Продукты', callback_data=call_back_expense.new(group='продукты')),
         ],
         [
-            InlineKeyboardButton('Ежемесячные', callback_data=call_back_expense.new(group='ежемесячные'))
+            InlineKeyboardButton('Редкие', callback_data=call_back_expense.new(group='редкие'))
+        ],
+        [
+            InlineKeyboardButton('Отмена', callback_data=call_back_expense.new(group='aborting'))
         ]
     ]
 )
@@ -43,5 +46,8 @@ profit_buttons = InlineKeyboardMarkup(
         [
             InlineKeyboardButton('Дополнительный', callback_data=call_back_profit.new(group='дополнительный'))
         ],
+        [
+            InlineKeyboardButton('Отмена', callback_data=call_back_profit.new(group='aborting'))
+        ]
     ]
 )

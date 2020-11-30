@@ -10,7 +10,6 @@ from data.dbase.models import make_default_db
 from psycopg2 import OperationalError
 from keyboards.default import default_buttons
 
-
 from loader import dp
 
 
@@ -19,13 +18,18 @@ async def expense_answer(msg: types.Message):
     await msg.answer('Выберите категорию расхода:', reply_markup=expense_buttons)
 
 
-@dp.callback_query_handler(call_back_expense.filter(group=['ежедневные', 'недельные', 'ежемесячные']), state=None)
+@dp.callback_query_handler(call_back_expense.filter(group=['ежедневные', 'продукты', 'редкие', 'aborting']), state=None)
 async def chose_group(call: CallbackQuery, callback_data: dict, state: FSMContext):
     await call.answer()
-    await call.message.answer('Введите сумму расхода:')
     data_group = callback_data.get('group')
-    await state.update_data(group=data_group)
-    await StatesExpense.ANSWER_1.set()
+    if data_group == 'aborting':
+        await call.answer()
+        await call.message.answer('Операция отменена')
+        await state.reset_data()
+    else:
+        await call.message.answer('Введите сумму расхода:')
+        await state.update_data(group=data_group)
+        await StatesExpense.ANSWER_1.set()
 
 
 @dp.message_handler(state=StatesExpense.ANSWER_1)

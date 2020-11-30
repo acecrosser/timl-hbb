@@ -7,7 +7,6 @@ from aiogram.dispatcher import FSMContext
 from utils.states import States
 from data.dbase.models import make_default_db
 from psycopg2 import OperationalError
-import logging
 
 
 from loader import dp
@@ -18,14 +17,18 @@ async def profit_answer(msg: types.Message):
     await msg.answer('Выберите категорию дохода:', reply_markup=profit_buttons)
 
 
-@dp.callback_query_handler(call_back_profit.filter(group=['постоянный', 'дополнительный']), state=None)
+@dp.callback_query_handler(call_back_profit.filter(group=['постоянный', 'дополнительный', 'aborting']), state=None)
 async def chose_group(call: CallbackQuery, callback_data: dict, state: FSMContext):
     await call.answer()
-    # logging.info(callback_data)
-    await call.message.answer('Введите сумму дохода:')
     data_group = callback_data.get('group')
-    await state.update_data(group=data_group)
-    await States.ANSWER_1.set()
+    if data_group == 'aborting':
+        await call.answer()
+        await call.message.answer('Операция отменена')
+        await state.reset_data()
+    else:
+        await call.message.answer('Введите сумму дохода:')
+        await state.update_data(group=data_group)
+        await States.ANSWER_1.set()
 
 
 @dp.message_handler(state=States.ANSWER_1)
