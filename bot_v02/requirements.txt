@@ -16,6 +16,7 @@ multidict==5.0.0
 parso==0.7.1
 pickleshare==0.7.5
 prompt-toolkit==3.0.8
+psycopg2==2.8.6
 py-dotenv==0.1
 Pygments==2.7.2
 pytz==2020.4
