@@ -36,4 +36,4 @@ async def make_order(msg: types.Message):
     for i in work_data:
         sum = sum_title('profit', id_user=id_user, period=month, title=i[0])
         end_list += f'{i[0]} --- <b>{sum[0]}</b> руб.\n'
-        await msg.answer(f'Отчет по доходам за текущий месяц: \n\n{end_list}')
+    await msg.answer(f'Отчет по доходам за текущий месяц: \n\n{end_list}')
