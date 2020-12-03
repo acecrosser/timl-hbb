@@ -1,12 +1,13 @@
 import logging
 import psycopg2 as sql
 from typing import Dict
+from data import config
 
 sql.OperationalError()
 
-connect = sql.connect(dbname='db_finbot',
-                      user='bot_admin',
-                      password='PmeT3mn7tPynhVqY254M',
+connect = sql.connect(dbname=config.DB_NAME,
+                      user=config.USER,
+                      password=config.PASSWD,
                       host='localhost', port='5432')
 cursor = connect.cursor()
 connect.autocommit = True

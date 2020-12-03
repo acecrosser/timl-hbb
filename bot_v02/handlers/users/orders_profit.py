@@ -5,6 +5,7 @@ from loader import dp
 from data.dbase.models import distinct, sum_title, today
 from aiogram.dispatcher.filters.builtin import Command
 from keyboards.inline.keyboard import call_back_profit_order, profit_buttons_order
+from .orders import general_make_order
 
 
 @dp.message_handler(Command('p_summa'))
@@ -31,9 +32,5 @@ async def make_order_profit(call: CallbackQuery, callback_data: dict):
 async def make_order(msg: types.Message):
     id_user = msg.from_user.id
     month = datetime.now().strftime('%Y-%m')
-    work_data = distinct("profit", id_user=id_user, period=month)
-    end_list = ''
-    for i in work_data:
-        sum = sum_title('profit', id_user=id_user, period=month, title=i[0])
-        end_list += f'{i[0]} --- <b>{sum[0]}</b> руб.\n'
-    await msg.answer(f'Отчет по доходам за текущий месяц: \n\n{end_list}')
+    order = general_make_order('profit', id_user, month)
+    await msg.answer(f'Отчет доходы текущий месяц: \n\n{order}')
