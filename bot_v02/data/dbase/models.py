@@ -46,7 +46,7 @@ def today(table: str, id_user: str, period: str):
 def distinct(table: str, id_user: str, period: str):
     cursor.execute(
         f"SELECT DISTINCT title "
-        f"FROM {table}"
+        f"FROM {table} "
         f"WHERE id_user='{id_user}' "
         f"AND time LIKE '{period}%'"
     )
