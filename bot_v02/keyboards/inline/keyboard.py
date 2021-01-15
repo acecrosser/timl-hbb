@@ -1,5 +1,6 @@
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from aiogram.utils.callback_data import CallbackData
+from data.dbase.settings import list_settings
 
 
 call_back_expense = CallbackData('exp', 'group')
@@ -7,25 +8,34 @@ call_back_order = CallbackData('order', 'group')
 call_back_profit = CallbackData('prf', 'group')
 call_back_profit_order = CallbackData('p_order', 'group')
 
-expense_buttons = InlineKeyboardMarkup(
-    inline_keyboard=[
-        [
-            InlineKeyboardButton('Ежедневные', callback_data=call_back_expense.new(group='ежедневные')),
-        ],
-        [
-            InlineKeyboardButton('Продукты', callback_data=call_back_expense.new(group='продукты')),
-        ],
-        [
-            InlineKeyboardButton('Постоянные', callback_data=call_back_expense.new(group='постоянные'))
-        ],
-        [
-            InlineKeyboardButton('Редкие', callback_data=call_back_expense.new(group='редкие'))
-        ],
-        [
-            InlineKeyboardButton('Отмена', callback_data=call_back_expense.new(group='aborting'))
-        ]
-    ]
-)
+
+settings = list_settings(id_user='5093906')
+set_list = []
+for i in settings:
+    set_list.append([InlineKeyboardButton(f'{i[0]}', callback_data=call_back_expense.new(group=f'{str(i[0]).lower()}'))])
+
+set_list.append([InlineKeyboardButton('Отмена', callback_data=call_back_expense.new(group='aborting'))])
+ex_buttons = InlineKeyboardMarkup(inline_keyboard=set_list)
+
+# expense_buttons = InlineKeyboardMarkup(
+#     inline_keyboard=[
+#         [
+#             InlineKeyboardButton('Ежедневные', callback_data=call_back_expense.new(group='ежедневные')),
+#         ],
+#         [
+#             InlineKeyboardButton('Продукты', callback_data=call_back_expense.new(group='продукты')),
+#         ],
+#         [
+#             InlineKeyboardButton('Постоянные', callback_data=call_back_expense.new(group='постоянные'))
+#         ],
+#         [
+#             InlineKeyboardButton('Редкие', callback_data=call_back_expense.new(group='редкие'))
+#         ],
+#         [
+#             InlineKeyboardButton('Отмена', callback_data=call_back_expense.new(group='aborting'))
+#         ]
+#     ]
+# )
 
 expense_buttons_order = InlineKeyboardMarkup(
     inline_keyboard=[

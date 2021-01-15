@@ -5,7 +5,7 @@ from aiogram.types import CallbackQuery
 from data.dbase.models import insert_data
 from aiogram.dispatcher import FSMContext
 from utils.states import States
-from data.dbase.models import make_default_db
+from data.dbase.connect import make_default_db
 from psycopg2 import OperationalError
 
 

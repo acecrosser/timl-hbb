@@ -11,3 +11,10 @@ class States(StatesGroup):
     ANSWER_1 = State()
     ANSWER_2 = State()
     ANSWER_3 = State()
+
+
+class StatesSettingsExpense(StatesGroup):
+    ANSWER_1 = State()
+    ANSWER_2 = State()
+    ANSWER_3 = State()
+
