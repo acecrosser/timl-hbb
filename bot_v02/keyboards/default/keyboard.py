@@ -14,3 +14,18 @@ default_buttons = ReplyKeyboardMarkup(
         ]
     ]
 )
+
+settings_buttons = ReplyKeyboardMarkup(
+    resize_keyboard=True,
+    keyboard=[
+        [
+            KeyboardButton('Добавить'),
+            KeyboardButton('Удалить')
+        ],
+        [
+            KeyboardButton('Список'),
+            KeyboardButton('Назад')
+        ],
+    ]
+)
+

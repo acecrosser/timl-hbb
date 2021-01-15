@@ -3,28 +3,29 @@ from datetime import datetime
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.types import CallbackQuery
-from keyboards.inline import call_back_expense, ex_buttons
+from keyboards.inline import call_back_expense, set_buttons, call_back_expense
 from data.dbase.models import insert_data
 from utils.states import StatesExpense
 from data.dbase.connect import make_default_db
 from psycopg2 import OperationalError
 from keyboards.default import default_buttons
 from data.dbase.settings import list_settings
-
-
 from loader import dp
+
+
+def make_list_group():
+    settings = list_settings(id_user='5093906', grouping='expense')
+    list_group = [str(group[0]).lower() for group in settings]
+    list_group.append('aborting')
+    return list_group
 
 
 @dp.message_handler(lambda msg: msg.text.startswith('Расход'))
 async def expense_answer(msg: types.Message):
-    await msg.answer('Выберите категорию расхода:', reply_markup=ex_buttons)
-
-settings = list_settings(id_user='5093906')
-list_group = [str(group[0]).lower() for group in settings]
-list_group.append('aborting')
+    await msg.answer('Выберите категорию расхода:', reply_markup=set_buttons('expense', call_back_expense))
 
 
-@dp.callback_query_handler(call_back_expense.filter(group=list_group), state=None)
+@dp.callback_query_handler(call_back_expense.filter(group=make_list_group()), state=None)
 async def chose_group(call: CallbackQuery, callback_data: dict, state: FSMContext):
     await call.answer()
     data_group = callback_data.get('group')

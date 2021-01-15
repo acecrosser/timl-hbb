@@ -7,15 +7,32 @@ call_back_expense = CallbackData('exp', 'group')
 call_back_order = CallbackData('order', 'group')
 call_back_profit = CallbackData('prf', 'group')
 call_back_profit_order = CallbackData('p_order', 'group')
+call_back_settings = CallbackData('stg', 'group')
 
 
-settings = list_settings(id_user='5093906')
-set_list = []
-for i in settings:
-    set_list.append([InlineKeyboardButton(f'{i[0]}', callback_data=call_back_expense.new(group=f'{str(i[0]).lower()}'))])
+def set_buttons(grouping: str, callback):
+    settings = list_settings(id_user='5093906', grouping=grouping)
+    set_list = []
+    for i in settings:
+        set_list.append([InlineKeyboardButton(f'{i[0]}', callback_data=callback.new(group=f'{str(i[0]).lower()}'))])
+    set_list.append([InlineKeyboardButton('Отмена', callback_data=call_back_expense.new(group='aborting'))])
+    return InlineKeyboardMarkup(inline_keyboard=set_list)
 
-set_list.append([InlineKeyboardButton('Отмена', callback_data=call_back_expense.new(group='aborting'))])
-ex_buttons = InlineKeyboardMarkup(inline_keyboard=set_list)
+
+button_settings_group = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [
+            InlineKeyboardButton('Расходы', callback_data=call_back_settings.new(group='expense'))
+        ],
+        [
+            InlineKeyboardButton('Доходы', callback_data=call_back_settings.new(group='profit'))
+        ],
+        [
+            InlineKeyboardButton('Отмена', callback_data=call_back_settings.new(group='aborting_stg'))
+        ]
+
+    ]
+)
 
 # expense_buttons = InlineKeyboardMarkup(
 #     inline_keyboard=[

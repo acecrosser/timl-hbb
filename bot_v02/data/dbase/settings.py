@@ -2,20 +2,20 @@ import logging
 from .connect import cursor
 
 
-def list_settings(id_user: str) -> list:
+def list_settings(id_user: str, grouping: str) -> list:
     cursor.execute(
         f"SELECT title "
         f"FROM settings "
-        f"WHERE id_user='{id_user}'"
+        f"WHERE id_user='{id_user}' AND grouping='{grouping}'"
     )
     settings = cursor.fetchall()
     return settings
 
 
-def add_setting(id_user: str, title: str):
+def add_setting(id_user: str, title: str, grouping: str):
     cursor.execute(
-        f"INSERT INTO settings (id_user, title)"
-        f"VALUES ({id_user}, {title})"
+        f"INSERT INTO settings (id_user, title, grouping) "
+        f"VALUES ('{id_user}', '{title}', '{grouping}')"
     )
     logging.info('Группа добавлена')
 

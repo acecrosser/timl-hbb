@@ -1,1 +1,1 @@
-from .states import StatesExpense, States
+from .states import StatesExpense, States, StatesSettingsExpense

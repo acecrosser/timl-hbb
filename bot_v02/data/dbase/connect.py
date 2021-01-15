@@ -16,6 +16,8 @@ def make_default_db():
                    '(id_user integer, amount real, grouping text, title text, time text)')
     cursor.execute('CREATE TABLE expense '
                    '(id_user integer, amount real, grouping text, title text, time text)')
+    cursor.execute('CREATE TABLE settings '
+                   '(id_user integer, title text, grouping text)')
     connect.commit()
     print('БД успешно создана')
 

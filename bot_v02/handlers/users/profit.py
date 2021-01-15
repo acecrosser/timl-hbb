@@ -1,6 +1,8 @@
 from datetime import datetime
 from aiogram import types
-from keyboards.inline import profit_buttons, call_back_profit
+
+from data.dbase.settings import list_settings
+from keyboards.inline import profit_buttons, call_back_profit, set_buttons, call_back_profit
 from aiogram.types import CallbackQuery
 from data.dbase.models import insert_data
 from aiogram.dispatcher import FSMContext
@@ -14,10 +16,17 @@ from loader import dp
 
 @dp.message_handler(lambda msg: msg.text.startswith('Доход'))
 async def profit_answer(msg: types.Message):
-    await msg.answer('Выберите категорию дохода:', reply_markup=profit_buttons)
+    await msg.answer('Выберите категорию дохода:', reply_markup=set_buttons('profit', call_back_profit))
 
 
-@dp.callback_query_handler(call_back_profit.filter(group=['постоянный', 'дополнительный', 'aborting']), state=None)
+def make_list_group():
+    settings = list_settings(id_user='5093906', grouping='profit')
+    list_group = [str(group[0]).lower() for group in settings]
+    list_group.append('aborting')
+    return list_group
+
+
+@dp.callback_query_handler(call_back_profit.filter(group=make_list_group()), state=None)
 async def chose_group(call: CallbackQuery, callback_data: dict, state: FSMContext):
     await call.answer()
     data_group = callback_data.get('group')
