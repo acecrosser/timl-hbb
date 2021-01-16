@@ -1,6 +1,6 @@
 from .start import dp
-from .profit import dp
-from .expense import dp
+from .profit import dp, make_list_group_profit
+from .expense import dp, make_list_group_expense
 from .orders_expense import dp
 from .orders_profit import dp
 from .settings import dp

@@ -18,3 +18,8 @@ class StatesSettingsExpense(StatesGroup):
     ANSWER_2 = State()
     ANSWER_3 = State()
 
+
+class StatesSettingsDeleting(StatesGroup):
+    ANSWER_1 = State()
+
+

@@ -34,6 +34,22 @@ button_settings_group = InlineKeyboardMarkup(
     ]
 )
 
+button_settings_group_del = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [
+            InlineKeyboardButton('Расходы', callback_data=call_back_settings.new(group='expense_del'))
+        ],
+        [
+            InlineKeyboardButton('Доходы', callback_data=call_back_settings.new(group='profit_del'))
+        ],
+        [
+            InlineKeyboardButton('Отмена', callback_data=call_back_settings.new(group='aborting_stg_del'))
+        ]
+
+    ]
+)
+
+
 # expense_buttons = InlineKeyboardMarkup(
 #     inline_keyboard=[
 #         [

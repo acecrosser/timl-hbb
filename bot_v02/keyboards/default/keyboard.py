@@ -1,4 +1,13 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
+from data.dbase.settings import list_settings
+
+
+def set_default_button(grouping: str):
+    settings = list_settings(id_user='5093906', grouping=grouping)
+    set_list = []
+    for i in settings:
+        set_list.append([KeyboardButton(f'{i[0]}')])
+    return ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True, keyboard=set_list)
 
 
 default_buttons = ReplyKeyboardMarkup(

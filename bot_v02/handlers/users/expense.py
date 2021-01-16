@@ -12,10 +12,13 @@ from keyboards.default import default_buttons
 from data.dbase.settings import list_settings
 from loader import dp
 
+list_group = []
 
-def make_list_group():
+
+def make_list_group_expense():
     settings = list_settings(id_user='5093906', grouping='expense')
-    list_group = [str(group[0]).lower() for group in settings]
+    for group in settings:
+        list_group.append(str(group[0]).lower())
     list_group.append('aborting')
     return list_group
 
@@ -23,9 +26,10 @@ def make_list_group():
 @dp.message_handler(lambda msg: msg.text.startswith('Расход'))
 async def expense_answer(msg: types.Message):
     await msg.answer('Выберите категорию расхода:', reply_markup=set_buttons('expense', call_back_expense))
+    make_list_group_expense()
 
 
-@dp.callback_query_handler(call_back_expense.filter(group=make_list_group()), state=None)
+@dp.callback_query_handler(call_back_expense.filter(group=list_group), state=None)
 async def chose_group(call: CallbackQuery, callback_data: dict, state: FSMContext):
     await call.answer()
     data_group = callback_data.get('group')
