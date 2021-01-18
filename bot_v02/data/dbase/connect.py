@@ -23,4 +23,5 @@ def make_default_db():
 
 
 if __name__ == '__main__':
+    from data import config
     make_default_db()
