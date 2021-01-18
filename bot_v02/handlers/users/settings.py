@@ -3,12 +3,11 @@ from aiogram.dispatcher import FSMContext
 from aiogram.types import CallbackQuery
 from utils.states import StatesSettingsExpense, StatesSettingsDeleting
 from keyboards.inline import button_settings_group, call_back_settings, button_settings_group_del
-from keyboards.inline import set_buttons, call_back_expense, call_back_profit
 from keyboards.default import set_default_button, default_buttons
 from data.dbase.settings import list_settings, add_setting, del_setting
 from loader import dp
-from .expense import make_list_group_expense, list_group
-from .profit import make_list_group_profit, list_group_profit
+from .expense import make_list_group_expense
+from .profit import make_list_group_profit
 
 
 @dp.message_handler(text='Добавить')
@@ -84,8 +83,10 @@ async def choice_setting_for_del(call: CallbackQuery, callback_data: dict, state
         @dp.message_handler(state=StatesSettingsDeleting.ANSWER_1)
         async def del_expense_setting(msg: types.Message):
             title = msg.text
-            del_setting(msg.from_user.id, title)
-            await msg.answer('Категория удалена успешно', reply_markup=default_buttons)
+            data = await state.get_data()
+            grouping = data.get('group')
+            del_setting(msg.from_user.id, title, grouping[:5])
+            await msg.answer(f'Категория "{title}" - удалена', reply_markup=default_buttons)
             make_list_group_expense()
             await state.finish()
     else:
@@ -96,8 +97,10 @@ async def choice_setting_for_del(call: CallbackQuery, callback_data: dict, state
         @dp.message_handler(state=StatesSettingsDeleting.ANSWER_1)
         async def del_expense_setting(msg: types.Message):
             title = msg.text
-            del_setting(msg.from_user.id, title)
-            await msg.answer('Категория удалена успешно', reply_markup=default_buttons)
+            data = await state.get_data()
+            grouping = data.get('group')
+            del_setting(msg.from_user.id, title, grouping[:5])
+            await msg.answer(f'Категория "{title}" - удалена', reply_markup=default_buttons)
             make_list_group_expense()
             await state.finish()
 

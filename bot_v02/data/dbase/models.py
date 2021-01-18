@@ -36,12 +36,12 @@ def distinct(table: str, id_user: str, period: str):
     return distinct_data
 
 
-def sum_title(table: str, id_user: str, period: str, title: str) -> float:
+def sum_title(table: str, id_user: str, period: str, grouping: str) -> float:
     cursor.execute(
         f"SELECT SUM(amount) "
         f"FROM {table} "
         f"WHERE id_user='{id_user}' "
-        f"AND title LIKE '{title}%' "
+        f"AND grouping LIKE '{grouping}%' "
         f"AND time LIKE '{period}%'"
     )
     title_sum = cursor.fetchone()

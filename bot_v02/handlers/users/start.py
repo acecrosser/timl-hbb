@@ -8,10 +8,11 @@ from loader import dp
 
 @dp.message_handler(CommandStart())
 async def bot_start(msg: types.Message):
-    await msg.answer(f'Привет, {msg.from_user.full_name}! \n'
-                     f'\n'
-                     f'Тебя привествует Бот-Бухгалтер.\n'
-                     f'Сначало предлагаю, осуществить настройку свойх категорий', reply_markup=default_buttons)
+    await msg.answer(f'Привет, {msg.from_user.full_name}!\n\n'
+                     'Тебя привествует домашний "Бот-Бухгалтер"\n\n'
+                     'Данный бот помогает вести журнал расходов-доходов. '
+                     'В функционале так же есть некоторые базовые отчеты по учету.\n\n'
+                     'Перед началом работы требуется осуществить настройку свойх категорий', reply_markup=default_buttons)
 
 
 @dp.message_handler(text='Настройки')

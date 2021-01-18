@@ -4,7 +4,7 @@ from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.types import CallbackQuery
 from keyboards.inline import call_back_expense, set_buttons, call_back_expense
-from data.dbase.models import insert_data
+from data.dbase.models import insert_data, sum_title
 from utils.states import StatesExpense
 from data.dbase.connect import make_default_db
 from psycopg2 import OperationalError
@@ -69,10 +69,15 @@ async def make_expense(msg: types.Message, state: FSMContext):
     except OperationalError:
         make_default_db()
         insert_data('expense', value_group)
+
+    periods = datetime.now().strftime('%Y-%m')
+    total_amount = sum_title('expense', msg.from_user.id, periods, group)
+
     await msg.answer(f'<b>Расход добавлен</b>\n'
-                     f'Сумма: {summa} руб.\n'
-                     f'Имя расхода - {name.title()}. \n'
-                     f'Группа расходов - "{str(group).title()}" \n',
+                     f'Сумма: <b>{summa}</b> руб.\n'
+                     f'Имя расхода - {name.capitalize()}. \n'
+                     f'Группа расходов - "{str(group).capitalize()}" \n\n'
+                     f'Общая за месяц: <b>{total_amount[0]}</b> руб.',
                      reply_markup=default_buttons)
     await state.finish()
 

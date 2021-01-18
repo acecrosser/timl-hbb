@@ -69,6 +69,6 @@ async def make_expense(msg: types.Message, state: FSMContext):
         insert_data('profit', value_group)
     await msg.answer(f'<b>Доход добавлен</b>\n'
                      f'Сумма: {summa} руб.\n'
-                     f'Имя дохода - {name.title()}. \n'
-                     f'Группа дохода - "{str(group).title()}" \n')
+                     f'Имя дохода - {name.capitalize()}. \n'
+                     f'Группа дохода - "{str(group).capitalize()}" \n')
     await state.finish()

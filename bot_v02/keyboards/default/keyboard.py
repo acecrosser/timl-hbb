@@ -25,7 +25,7 @@ default_buttons = ReplyKeyboardMarkup(
 )
 
 settings_buttons = ReplyKeyboardMarkup(
-    resize_keyboard=True,
+    resize_keyboard=True, one_time_keyboard=True,
     keyboard=[
         [
             KeyboardButton('Добавить'),

@@ -5,5 +5,6 @@ from .orders_expense import dp
 from .orders_profit import dp
 from .settings import dp
 from .echo import dp
+from prettytable import PrettyTable
 
 __all__ = ['dp']

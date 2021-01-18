@@ -20,10 +20,11 @@ def add_setting(id_user: str, title: str, grouping: str):
     logging.info('Группа добавлена')
 
 
-def del_setting(id_user: str, title: str):
+def del_setting(id_user: str, title: str, grouping: str):
     cursor.execute(
         f"DELETE FROM settings "
-        f"WHERE title='{title}' "
+        f"WHERE grouping LIKE '{grouping}%' "
+        f"AND title='{title}' "
         f"AND id_user='{id_user}'"
     )
     logging.info('Группа удалена')
