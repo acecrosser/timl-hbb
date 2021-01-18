@@ -25,9 +25,9 @@ def today(table: str, id_user: str, period: str):
     return summa_today
 
 
-def distinct(table: str, id_user: str, period: str):
+def distinct(name: str, table: str, id_user: str, period: str):
     cursor.execute(
-        f"SELECT DISTINCT title "
+        f"SELECT DISTINCT {name} "
         f"FROM {table} "
         f"WHERE id_user='{id_user}' "
         f"AND time LIKE '{period}%'"
@@ -36,12 +36,12 @@ def distinct(table: str, id_user: str, period: str):
     return distinct_data
 
 
-def sum_title(table: str, id_user: str, period: str, grouping: str) -> float:
+def sum_title(table: str, id_user: str, period: str, grouping: str, name: str) -> float:
     cursor.execute(
         f"SELECT SUM(amount) "
         f"FROM {table} "
         f"WHERE id_user='{id_user}' "
-        f"AND grouping LIKE '{grouping}%' "
+        f"AND {name} LIKE '{grouping}%' "
         f"AND time LIKE '{period}%'"
     )
     title_sum = cursor.fetchone()

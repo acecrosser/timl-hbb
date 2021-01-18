@@ -38,3 +38,17 @@ settings_buttons = ReplyKeyboardMarkup(
     ]
 )
 
+ordering_buttons = ReplyKeyboardMarkup(
+    resize_keyboard=True, one_time_keyboard=True,
+    keyboard=[
+        [
+            KeyboardButton('По категориям'),
+            KeyboardButton('По времени'),
+        ],
+        [
+            KeyboardButton('Общий'),
+            KeyboardButton('На главную')
+        ]
+    ]
+)
+

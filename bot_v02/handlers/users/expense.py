@@ -71,13 +71,14 @@ async def make_expense(msg: types.Message, state: FSMContext):
         insert_data('expense', value_group)
 
     periods = datetime.now().strftime('%Y-%m')
-    total_amount = sum_title('expense', msg.from_user.id, periods, group)
+    _name = 'grouping'
+    total_amount = sum_title('expense', msg.from_user.id, periods, group, _name)
 
-    await msg.answer(f'<b>Расход добавлен</b>\n'
+    await msg.answer(f'<b>Расход добавлен</b>\n\n'
                      f'Сумма: <b>{summa}</b> руб.\n'
-                     f'Имя расхода - {name.capitalize()}. \n'
-                     f'Группа расходов - "{str(group).capitalize()}" \n\n'
-                     f'Общая за месяц: <b>{total_amount[0]}</b> руб.',
+                     f'Место: {name.capitalize()} \n'
+                     f'Категория: {str(group).capitalize()} \n\n'
+                     f'Текущий месяц: <b>{total_amount[0]}</b> руб.',
                      reply_markup=default_buttons)
     await state.finish()
 
