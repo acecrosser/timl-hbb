@@ -25,7 +25,7 @@ def make_list_group_expense():
 
 @dp.message_handler(lambda msg: msg.text.startswith('Расход'))
 async def expense_answer(msg: types.Message):
-    await msg.answer('Выберите категорию расхода:', reply_markup=set_buttons('expense', call_back_expense))
+    await msg.answer('Выберите категорию:', reply_markup=set_buttons('expense', call_back_expense))
     make_list_group_expense()
 
 
@@ -38,7 +38,7 @@ async def chose_group(call: CallbackQuery, callback_data: dict, state: FSMContex
         await call.message.answer('Операция отменена')
         await state.reset_data()
     else:
-        await call.message.answer('Введите сумму расхода:')
+        await call.message.answer('Введите сумму:')
         await state.update_data(group=data_group)
         await StatesExpense.ANSWER_1.set()
 
@@ -47,7 +47,7 @@ async def chose_group(call: CallbackQuery, callback_data: dict, state: FSMContex
 async def take_summa(msg: types.Message, state: FSMContext):
     summa = msg.text
     await state.update_data(summa=summa)
-    await msg.answer(f'Имя расхода:')
+    await msg.answer(f'Место:')
     await StatesExpense.next()
 
 
@@ -75,10 +75,10 @@ async def make_expense(msg: types.Message, state: FSMContext):
     total_amount = sum_title('expense', msg.from_user.id, periods, group, _name)
 
     await msg.answer(f'<b>Расход добавлен</b>\n\n'
-                     f'Сумма: <b>{summa}</b> руб.\n'
-                     f'Место: {name.capitalize()} \n'
-                     f'Категория: {str(group).capitalize()} \n\n'
-                     f'Текущий месяц: <b>{total_amount[0]}</b> руб.',
+                     f'Сумма - <b>{summa}</b>\n'
+                     f'Место - {name.capitalize()} \n'
+                     f'Категория - {str(group).capitalize()} \n\n'
+                     f'Текущий месяц: [  <b>{total_amount[0]}  ]</b>',
                      reply_markup=default_buttons)
     await state.finish()
 

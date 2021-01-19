@@ -1,9 +1,10 @@
 from datetime import datetime
 from aiogram import types
 from data.dbase.settings import list_settings
+from keyboards.default import default_buttons
 from keyboards.inline import profit_buttons, call_back_profit, set_buttons, call_back_profit
 from aiogram.types import CallbackQuery
-from data.dbase.models import insert_data
+from data.dbase.models import insert_data, sum_title
 from aiogram.dispatcher import FSMContext
 from utils.states import States
 from data.dbase.connect import make_default_db
@@ -23,7 +24,7 @@ def make_list_group_profit():
 
 @dp.message_handler(lambda msg: msg.text.startswith('Доход'))
 async def profit_answer(msg: types.Message):
-    await msg.answer('Выберите категорию дохода:', reply_markup=set_buttons('profit', call_back_profit))
+    await msg.answer('Выберите категорию:', reply_markup=set_buttons('profit', call_back_profit))
     make_list_group_profit()
 
 
@@ -36,7 +37,7 @@ async def chose_group(call: CallbackQuery, callback_data: dict, state: FSMContex
         await call.message.answer('Операция отменена')
         await state.reset_data()
     else:
-        await call.message.answer('Введите сумму дохода:')
+        await call.message.answer('Введите сумму:')
         await state.update_data(group=data_group)
         await States.ANSWER_1.set()
 
@@ -45,7 +46,7 @@ async def chose_group(call: CallbackQuery, callback_data: dict, state: FSMContex
 async def take_summa(msg: types.Message, state: FSMContext):
     summa = msg.text
     await state.update_data(summa=summa)
-    await msg.answer(f'Имя дохода:')
+    await msg.answer(f'Источник:')
     await States.next()
 
 
@@ -67,8 +68,15 @@ async def make_expense(msg: types.Message, state: FSMContext):
     except OperationalError:
         make_default_db()
         insert_data('profit', value_group)
-    await msg.answer(f'<b>Доход добавлен</b>\n'
-                     f'Сумма: {summa} руб.\n'
-                     f'Имя дохода - {name.capitalize()}. \n'
-                     f'Группа дохода - "{str(group).capitalize()}" \n')
+
+    periods = datetime.now().strftime('%Y-%m')
+    _name = 'grouping'
+    total_amount = sum_title('profit', msg.from_user.id, periods, group, _name)
+
+    await msg.answer(f'<b>Доход добавлен</b>\n\n'
+                     f'Сумма - <b>{summa}</b>\n'
+                     f'Источник - {name.capitalize()}\n'
+                     f'Категория - {str(group).capitalize()}\n\n'
+                     f'Текущий месяц: [  <b>{total_amount[0]}  ]</b>',
+                     reply_markup=default_buttons)
     await state.finish()

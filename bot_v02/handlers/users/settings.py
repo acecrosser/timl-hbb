@@ -52,12 +52,12 @@ async def get_list(msg: types.Message):
     expense_title = ''
     profit_title = ''
     for title in make_list_expense:
-        expense_title += title + ',\n'
+        expense_title += ('<b>' + title + '</b>\n')
     for title in make_list_profit:
-        profit_title += title + ',\n'
-    await msg.answer(f'Список категорий:\n\n'
-                     f'Категории расходов:\n'
-                     f'{expense_title} \n\n'
+        profit_title += ('<b>' + title + '</b>\n')
+    await msg.answer(f'Категории расходов:\n'
+                     f'{expense_title}'
+                     f'-----------------\n'
                      f'Категории доходов:\n'
                      f'{profit_title}')
 

@@ -20,7 +20,7 @@ async def bot_settings(msg: types.Message):
     await msg.answer(f'Добавить или удалить категорию:', reply_markup=settings_buttons)
 
 
-@dp.message_handler(text=['Назад', 'На главную'])
+@dp.message_handler(text=['Назад'])
 async def bot_back(msg: types.Message):
     await msg.answer('Главное меню:', reply_markup=default_buttons)
 
