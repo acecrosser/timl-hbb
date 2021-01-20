@@ -15,18 +15,18 @@ from loader import dp
 list_group = []
 
 
-def make_list_group_expense():
-    settings = list_settings(id_user='5093906', grouping='expense')
+def make_list_group_expense(id_user: str, grouping: str):
+    settings = list_settings(id_user=id_user, grouping=grouping)
     for group in settings:
         list_group.append(str(group[0]).lower())
     list_group.append('aborting')
     return list_group
 
 
-@dp.message_handler(lambda msg: msg.text.startswith('Расход'))
+@dp.message_handler(text='Расход')
 async def expense_answer(msg: types.Message):
-    await msg.answer('Выберите категорию:', reply_markup=set_buttons('expense', call_back_expense))
-    make_list_group_expense()
+    await msg.answer('Выберите категорию:', reply_markup=set_buttons('expense', call_back_expense, msg.from_user.id))
+    make_list_group_expense(msg.from_user.id, 'expense')
 
 
 @dp.callback_query_handler(call_back_expense.filter(group=list_group), state=None)

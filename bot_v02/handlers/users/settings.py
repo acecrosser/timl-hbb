@@ -38,8 +38,8 @@ async def _setting(msg: types.Message, state: FSMContext):
     title = data.get('title')
     add_setting(msg.from_user.id, title, grouping)
     await msg.answer(f'Категория "{title}" - добавлена')
-    make_list_group_expense()
-    make_list_group_profit()
+    make_list_group_expense(msg.from_user.id, 'expense')
+    make_list_group_profit(msg.from_user.id, 'profit')
     await state.finish()
 
 
@@ -87,7 +87,7 @@ async def choice_setting_for_del(call: CallbackQuery, callback_data: dict, state
             grouping = data.get('group')
             del_setting(msg.from_user.id, title, grouping[:5])
             await msg.answer(f'Категория "{title}" - удалена', reply_markup=default_buttons)
-            make_list_group_expense()
+            make_list_group_expense(msg.from_user.id, 'expense')
             await state.finish()
     else:
         await call.message.answer('Введите имя категории для удаления:', reply_markup=set_default_button('profit'))
@@ -101,6 +101,6 @@ async def choice_setting_for_del(call: CallbackQuery, callback_data: dict, state
             grouping = data.get('group')
             del_setting(msg.from_user.id, title, grouping[:5])
             await msg.answer(f'Категория "{title}" - удалена', reply_markup=default_buttons)
-            make_list_group_expense()
+            make_list_group_profit(msg.from_user.id, 'profit')
             await state.finish()
 

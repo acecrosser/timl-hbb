@@ -14,25 +14,26 @@ from loader import dp
 list_group_profit = []
 
 
-def make_list_group_profit():
-    settings = list_settings(id_user='5093906', grouping='profit')
+def make_list_group_profit(id_user: str, grouping: str):
+    settings = list_settings(id_user=id_user, grouping=grouping)
     for group in settings:
         list_group_profit.append(str(group[0]).lower())
-    list_group_profit.append('aborting')
+    list_group_profit.append('aborting_')
     return list_group_profit
 
 
-@dp.message_handler(lambda msg: msg.text.startswith('Доход'))
+@dp.message_handler(text='Доход')
 async def profit_answer(msg: types.Message):
-    await msg.answer('Выберите категорию:', reply_markup=set_buttons('profit', call_back_profit))
-    make_list_group_profit()
+    make_list_group_profit(msg.from_user.id, 'profit')
+    print(list_group_profit)
+    await msg.answer('Выберите категорию:', reply_markup=set_buttons('profit', call_back_profit, msg.from_user.id))
 
 
 @dp.callback_query_handler(call_back_profit.filter(group=list_group_profit), state=None)
 async def chose_group(call: CallbackQuery, callback_data: dict, state: FSMContext):
     await call.answer()
     data_group = callback_data.get('group')
-    if data_group == 'aborting':
+    if data_group == 'aborting_':
         await call.answer()
         await call.message.answer('Операция отменена')
         await state.reset_data()

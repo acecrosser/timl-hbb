@@ -2,6 +2,7 @@ from datetime import datetime
 from aiogram import types
 from data.dbase.models import distinct, sum_title, today
 from keyboards.default import ordering_buttons
+from keyboards.inline import button_chose_what_group_order_make
 from loader import dp
 
 
@@ -29,9 +30,14 @@ async def default_order(msg: types.Message):
                      f'<b>Доходы: [  {summa_profit[0]}  ]</b>\n\n'
                      f'{orders_profit}\n'
                      f'-----------------\n'
-                     f'<b>Итого: {result}</b>')
+                     f'<b>Остаток: {result}</b>')
 
 
 @dp.message_handler(text='Годовой')
 async def year_order(msg: types.Message):
     await msg.answer('Годовой отчет находится в разработке...', reply_markup=ordering_buttons)
+
+
+@dp.message_handler(text='По категориям')
+async def take_group(msg: types.Message):
+    await msg.answer('Выберите категорию отчета:', reply_markup=button_chose_what_group_order_make)
