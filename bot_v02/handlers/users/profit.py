@@ -2,7 +2,7 @@ from datetime import datetime
 from aiogram import types
 from data.dbase.settings import list_settings
 from keyboards.default import default_buttons
-from keyboards.inline import profit_buttons, call_back_profit, set_buttons, call_back_profit
+from keyboards.inline import set_buttons, call_back_profit
 from aiogram.types import CallbackQuery
 from data.dbase.models import insert_data, sum_title
 from aiogram.dispatcher import FSMContext
@@ -11,21 +11,20 @@ from data.dbase.connect import make_default_db
 from psycopg2 import OperationalError
 from loader import dp
 
-list_group_profit = []
+list_group_profit = set()
 
 
 def make_list_group_profit(id_user: str, grouping: str):
     settings = list_settings(id_user=id_user, grouping=grouping)
     for group in settings:
-        list_group_profit.append(str(group[0]).lower())
-    list_group_profit.append('aborting_')
+        list_group_profit.add(str(group[0]).lower())
+    list_group_profit.add('aborting')
     return list_group_profit
 
 
 @dp.message_handler(text='Доход')
 async def profit_answer(msg: types.Message):
     make_list_group_profit(msg.from_user.id, 'profit')
-    print(list_group_profit)
     await msg.answer('Выберите категорию:', reply_markup=set_buttons('profit', call_back_profit, msg.from_user.id))
 
 
@@ -33,9 +32,9 @@ async def profit_answer(msg: types.Message):
 async def chose_group(call: CallbackQuery, callback_data: dict, state: FSMContext):
     await call.answer()
     data_group = callback_data.get('group')
-    if data_group == 'aborting_':
+    if data_group == 'aborting':
         await call.answer()
-        await call.message.answer('Операция отменена')
+        await call.message.answer('<i>Операция отменена</i>', reply_markup=default_buttons)
         await state.reset_data()
     else:
         await call.message.answer('Введите сумму:')

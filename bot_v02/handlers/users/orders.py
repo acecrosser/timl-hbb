@@ -30,12 +30,12 @@ async def default_order(msg: types.Message):
                      f'<b>Доходы: [  {summa_profit[0]}  ]</b>\n\n'
                      f'{orders_profit}\n'
                      f'-----------------\n'
-                     f'<b>Остаток: {result}</b>')
+                     f'<b>Остаток: {result}</b>', reply_markup=ordering_buttons)
 
 
 @dp.message_handler(text='Годовой')
 async def year_order(msg: types.Message):
-    await msg.answer('Годовой отчет находится в разработке...', reply_markup=ordering_buttons)
+    await msg.answer('<i>Годовой отчет находится в разработке...</i>', reply_markup=ordering_buttons)
 
 
 @dp.message_handler(text='По категориям')

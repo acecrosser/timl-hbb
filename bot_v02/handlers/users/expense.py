@@ -1,9 +1,8 @@
-import logging
 from datetime import datetime
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.types import CallbackQuery
-from keyboards.inline import call_back_expense, set_buttons, call_back_expense
+from keyboards.inline import set_buttons, call_back_expense
 from data.dbase.models import insert_data, sum_title
 from utils.states import StatesExpense
 from data.dbase.connect import make_default_db
@@ -12,14 +11,14 @@ from keyboards.default import default_buttons
 from data.dbase.settings import list_settings
 from loader import dp
 
-list_group = []
+list_group = set()
 
 
 def make_list_group_expense(id_user: str, grouping: str):
     settings = list_settings(id_user=id_user, grouping=grouping)
     for group in settings:
-        list_group.append(str(group[0]).lower())
-    list_group.append('aborting')
+        list_group.add(str(group[0]).lower())
+    list_group.add('aborting')
     return list_group
 
 
