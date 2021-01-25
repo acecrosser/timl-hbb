@@ -43,11 +43,11 @@ ordering_buttons = ReplyKeyboardMarkup(
     keyboard=[
         [
             KeyboardButton('По категориям'),
-            KeyboardButton('По времени'),
+            KeyboardButton('Общий'),
         ],
         [
-            KeyboardButton('Общий'),
-            KeyboardButton('На главную')
+            KeyboardButton('Годовой'),
+            KeyboardButton('Назад')
         ]
     ]
 )

@@ -23,3 +23,10 @@ class StatesSettingsDeleting(StatesGroup):
     ANSWER_1 = State()
 
 
+class StatesChoseGroupExpense(StatesGroup):
+    ANSWER_1 = State()
+
+
+class StatesChoseGroupProfit(StatesGroup):
+    ANSWER_1 = State()
+
