@@ -45,9 +45,13 @@ async def chose_group(call: CallbackQuery, callback_data: dict, state: FSMContex
 @dp.message_handler(state=States.ANSWER_1)
 async def take_summa(msg: types.Message, state: FSMContext):
     summa = msg.text
-    await state.update_data(summa=summa)
-    await msg.answer(f'Источник:')
-    await States.next()
+    summa = ''.join(summa.split())
+    if not summa.isdigit():
+        await msg.answer(f'<b>{summa}</b> - это не цифра, попробуй еще раз')
+    else:
+        await state.update_data(summa=summa)
+        await msg.answer(f'Источник:')
+        await States.next()
 
 
 @dp.message_handler(state=States.ANSWER_2)
@@ -58,7 +62,7 @@ async def make_expense(msg: types.Message, state: FSMContext):
     name = msg.text
     value_group = {
         'id_user': msg.from_user.id,
-        'amount': summa,
+        'amount': int(summa),
         'grouping': group,
         'title': name,
         'time': datetime.now()
