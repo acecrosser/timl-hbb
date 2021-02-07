@@ -15,9 +15,11 @@ def set_buttons(grouping: str, callback, id_user):
     settings = list_settings(id_user=id_user, grouping=grouping)
     set_list = []
     for i in settings:
-        set_list.append([InlineKeyboardButton(f'{i[0]}', callback_data=callback.new(group=f'{str(i[0]).lower()}'))])
-    set_list.append([InlineKeyboardButton('Отмена', callback_data=callback.new(group='aborting'))])
-    return InlineKeyboardMarkup(inline_keyboard=set_list)
+        inline_but = InlineKeyboardButton(f'{i[0]}', callback_data=callback.new(group=f'{str(i[0]).lower()}'))
+        set_list.append(inline_but)
+    inline_but = InlineKeyboardButton('Отмена', callback_data=callback.new(group='aborting'))
+    set_list.append(inline_but)
+    return InlineKeyboardMarkup(row_width=2).add(*set_list)
 
 
 button_chose_what_group_order_make = InlineKeyboardMarkup(
