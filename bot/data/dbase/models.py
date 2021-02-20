@@ -50,7 +50,7 @@ def sum_title(table: str, id_user: str, period: str, grouping: str, name: str) -
 
 def distinct_group(title: str, table: str, id_user: str, period: str, grouping: str):
     cursor.execute(
-        f"SELECT DISTINCT {title}, amount "
+        f"SELECT {title}, amount "
         f"FROM {table} "
         f"WHERE id_user='{id_user}' "
         f"AND grouping='{grouping}' "
