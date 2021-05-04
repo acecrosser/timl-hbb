@@ -7,11 +7,11 @@ def set_default_button(grouping: str):
     set_list = []
     for i in settings:
         set_list.append([KeyboardButton(f'{i[0]}')])
-    return ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True, keyboard=set_list)
+    return ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=False, keyboard=set_list)
 
 
 default_buttons = ReplyKeyboardMarkup(
-    resize_keyboard=True, one_time_keyboard=True,
+    resize_keyboard=True, one_time_keyboard=False,
     keyboard=[
         [
             KeyboardButton('Доход'),
@@ -25,7 +25,7 @@ default_buttons = ReplyKeyboardMarkup(
 )
 
 settings_buttons = ReplyKeyboardMarkup(
-    resize_keyboard=True, one_time_keyboard=True,
+    resize_keyboard=True, one_time_keyboard=False,
     keyboard=[
         [
             KeyboardButton('Добавить'),
@@ -39,7 +39,7 @@ settings_buttons = ReplyKeyboardMarkup(
 )
 
 ordering_buttons = ReplyKeyboardMarkup(
-    resize_keyboard=True, one_time_keyboard=True,
+    resize_keyboard=True, one_time_keyboard=False,
     keyboard=[
         [
             KeyboardButton('По категориям'),

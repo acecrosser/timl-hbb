@@ -9,7 +9,7 @@ from aiogram.dispatcher import FSMContext
 from utils.states import States
 from data.dbase.connect import make_default_db
 from psycopg2 import OperationalError
-from loader import dp
+from loader import dp, bot
 
 list_group_profit = set()
 
@@ -37,7 +37,7 @@ async def chose_group(call: CallbackQuery, callback_data: dict, state: FSMContex
         await call.message.answer('<i>Операция отменена</i>', reply_markup=default_buttons)
         await state.reset_data()
     else:
-        await call.message.answer('Введите сумму:')
+        await call.message.answer('Введите сумму')
         await state.update_data(group=data_group)
         await States.ANSWER_1.set()
 
@@ -55,7 +55,7 @@ async def take_summa(msg: types.Message, state: FSMContext):
 
 
 @dp.message_handler(state=States.ANSWER_2)
-async def make_expense(msg: types.Message, state: FSMContext):
+async def make_profit(msg: types.Message, state: FSMContext):
     data = await state.get_data()
     group = data.get('group')
     summa = data.get('summa')
