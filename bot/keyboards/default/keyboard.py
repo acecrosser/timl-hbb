@@ -51,4 +51,3 @@ ordering_buttons = ReplyKeyboardMarkup(
         ]
     ]
 )
-
