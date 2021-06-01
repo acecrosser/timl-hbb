@@ -1,1 +1,12 @@
 /bot/.env
+/venv/
+/bot/__pycache__/
+/bot/data/__pycache__/
+/bot/data/dbase/__pycache__/
+/bot/handlers/__pycache__/
+/bot/handlers/users/__pycache__/
+/bot/keyboards/__pycache__/
+/bot/keyboards/default/__pycache__/
+/bot/keyboards/inline/__pycache__/
+/bot/utils/__pycache__/
+/bot/utils/misc/__pycache__/
