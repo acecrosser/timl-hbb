@@ -9,6 +9,7 @@ from data.dbase.connect import make_default_db
 from psycopg2 import OperationalError
 from keyboards.default import default_buttons
 from data.dbase.settings import list_settings
+from keyboards.default import set_button_for_choice
 from loader import dp
 
 list_group = set()
@@ -49,8 +50,12 @@ async def take_summa(msg: types.Message, state: FSMContext):
     if not summa.isdigit():
         await msg.answer(f'<b>{summa}</b> - это не цифра, попробуй еще раз')
     else:
+        data = await state.get_data()
+        group = data.get('group')
+        period = datetime.now().strftime('%Y-%m')
         await state.update_data(summa=summa)
-        await msg.answer(f'Место:')
+        await msg.answer(f'Место:', reply_markup=set_button_for_choice(
+            'expense', msg.from_user.id, group, period))
         await StatesExpense.next()
 
 

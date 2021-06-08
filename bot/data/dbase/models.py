@@ -11,7 +11,7 @@ def insert_data(table: str, column_items: Dict):
         f'INSERT INTO {table} '
         f'({columns})'
         f'VALUES ({number})', values)
-    logging.info('Данные успешно внесены...')
+    logging.info('Insert in db: Success')
 
 
 def today(table: str, id_user: str, period: str):
@@ -58,3 +58,14 @@ def distinct_group(title: str, table: str, id_user: str, period: str, grouping: 
     )
     distinct_data = cursor.fetchall()
     return distinct_data
+
+
+def disctinc_title(table: str, id_user: str, grouping: str, period: str):
+    cursor.execute(
+        f"SELECT DISTINCT title "
+        f"FROM {table} "
+        f"WHERE id_user='{id_user}' "
+        f"AND grouping='{grouping.lower()}' "
+        f"AND time LIKE '{period}%'"
+    )
+    return cursor.fetchall()

@@ -9,6 +9,7 @@ from aiogram.dispatcher import FSMContext
 from utils.states import States
 from data.dbase.connect import make_default_db
 from psycopg2 import OperationalError
+from keyboards.default import set_button_for_choice
 from loader import dp, bot
 
 list_group_profit = set()
@@ -49,8 +50,13 @@ async def take_summa(msg: types.Message, state: FSMContext):
     if not summa.isdigit():
         await msg.answer(f'<b>{summa}</b> - это не цифра, попробуй еще раз')
     else:
+        data = await state.get_data()
+        group = data.get('group')
+        period = datetime.now().strftime('%Y-%m')
         await state.update_data(summa=summa)
-        await msg.answer(f'Источник:')
+        await msg.answer(f'Источник:', reply_markup=set_button_for_choice(
+            'profit', msg.from_user.id, group, period
+        ))
         await States.next()
 
 

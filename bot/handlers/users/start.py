@@ -1,4 +1,5 @@
 from aiogram import types
+from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.builtin import CommandStart
 from keyboards.default import default_buttons, settings_buttons, ordering_buttons
 from loader import dp
@@ -19,7 +20,7 @@ async def bot_settings(msg: types.Message):
     await msg.answer(f'<b>Добавить</b> или <b>удалить</b> категорию?', reply_markup=settings_buttons)
 
 
-@dp.message_handler(text=['Назад'])
+@dp.message_handler(text='Назад')
 async def bot_back(msg: types.Message):
     await msg.answer('Главное меню', reply_markup=default_buttons)
 
@@ -27,4 +28,3 @@ async def bot_back(msg: types.Message):
 @dp.message_handler(text='Отчеты')
 async def bot_orders(msg: types.Message):
     await msg.answer('Выберите тип отчета:', reply_markup=ordering_buttons)
-
